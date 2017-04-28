@@ -2,15 +2,47 @@
 	Simple interface for moving the finger
 	Written by Sebastian Kaczor
 */
+#pragma once
+
 #include "keyShifts.h"
+#include <Servo.h> 
+
+class ServoController{
+public:
+	ServoController(int servoPin, int servoUpAngle, int servoDownForWhiteAngle, int servoDownForBlackAngle){
+		this->servoUpAngle = servoUpAngle;
+		this->servoDownForWhiteAngle = servoDownForWhiteAngle;
+		this->servoDownForBlackAngle = servoDownForBlackAngle;
+		fingerServo.attach(servoPin);
+	}
+	
+	void whiteDown(){
+		myservo.write(servoDownForWhiteAngle);
+	}
+	
+	void blackDown(){
+		myservo.write(servoDownForBlackAngle);
+	}
+	
+	void up(){
+		myservo.write(servoUpAngle);
+	}
+	
+	
+	
+private:
+	Servo fingerServo;
+	int servoUpAngle, servoDownForWhiteAngle, servoDownForBlackAngle;
+}
+
 
 class FingerController{
 public:
-
-	FingerController(int stepPin, int dirPin,int engineDelay){
+	FingerController(int stepPin, int dirPin, int engineDelay, ServoController  * fingerServo){
 		this->dirPin = dirPin;
 		this->stepPin = stepPin;
 		this->engineDelay = engineDelay;
+		this->fingerServo = fingerServo;
 	}
 	
 	void calibrate(){
@@ -20,7 +52,7 @@ public:
 	
 	void moveToKey(int key){
 		int nextKeyPos = shifts[key];
-		int diff = abs(nextKeyPos-curr_symbol);
+		int diff = abs(nextKeyPos-currentPos);
 		
 		if (diff == 0)
 			return;
@@ -33,12 +65,20 @@ public:
 		currentPos = nextKeyPos;
 	}
 	
+	void press(int pressTime){
+		//TODO
+		fingerServo.whiteDown();
+		delay(pressTime);
+		fingerServo.up();
+	}
+	
 	
 private:
 	int engineDelay;
 	int currentPos;
 	int stepPin;
 	int dirPin;
+	ServoController * fingerServo;
 	
 	//directionPin = HIGH -> go closer to engine
 	//directionPin == stepPin -> no move

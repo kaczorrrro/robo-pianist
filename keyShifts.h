@@ -2,6 +2,8 @@
 	Creates array with number of engine steps required for each key
 	Written by Sebastian Kaczor
 */
+#pragma once
+
 #define KEY_F3 0
 #define KEY_FIS3 1
 #define KEY_G3 2
