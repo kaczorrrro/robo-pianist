@@ -61,6 +61,19 @@ public:
 		//TODO error checking
 		return shifts[key];
 	}
+	
+	static bool isBlack(char key){
+		key = key%12;
+		switch(key){
+			case KEY_FIS3:
+			case KEY_GIS3:
+			case KEY_AIS3:
+			case KEY_CIS4:
+			case KEY_DIS4:
+			return true;
+		}
+		return false;
+	}
 
 private:
 	int shifts[32];
@@ -72,7 +85,7 @@ private:
 			for (int i = 0; i<12; i++) {
 				shifts[KEY_F3 + 12 * j + i] = shifts[KEY_F3 + i] + 7 * j*dSym;
 
-				if (12 * j + i == KEY_C5) //last key check
+				if (12 * j + i == KEY_C6) //last key check
 					return;
 			}
 		}

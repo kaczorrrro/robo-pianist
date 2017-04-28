@@ -8,11 +8,10 @@
 #include <Servo.h> 
 class ServoController {
 public:
-	ServoController(int servoPin, int servoUpAngle, int servoDownForWhiteAngle, int servoDownForBlackAngle) {
+	ServoController(int servoUpAngle, int servoDownForWhiteAngle, int servoDownForBlackAngle) {
 		this->servoUpAngle = servoUpAngle;
 		this->servoDownForWhiteAngle = servoDownForWhiteAngle;
 		this->servoDownForBlackAngle = servoDownForBlackAngle;
-		fingerServo.attach(servoPin);
 	}
 
 	void whiteDown() {
@@ -25,6 +24,10 @@ public:
 
 	void up() {
 		fingerServo.write(servoUpAngle);
+	}
+	
+	void attach(int servoPin){
+		fingerServo.attach(servoPin);
 	}
 
 
@@ -45,15 +48,24 @@ public:
 		this->shifts = shifts;
 	}
 
-	void calibrate() {
-		//Code for calibration from button
+	//Code for calibration from button
+	//Button not pressed -> true
+	void calibrate(int buttonPin, int stepsFromLeftSide) {
+		delay(200); //Since clicking button starts calibration, we should wait some time to make sure button is no longer pressed
+		
 		currentPos = 0;
+		currentKey = KEY_F3;
+		
+		while (digitalRead(buttonPin)) 
+			moveLeft(2);
+		delay(10);
+		moveRight(stepsFromLeftSide);
+		delay(2000);
 	}
 
 	void moveToKey(char key) {
 		int nextKeyPos = shifts->getShift(key);
 		int diff = abs(nextKeyPos - currentPos);
-
 		if (diff == 0)
 			return;
 
@@ -63,11 +75,16 @@ public:
 			moveLeft(diff);
 
 		currentPos = nextKeyPos;
+		currentKey = key;
 	}
 
 	void press(int pressTime) {
-		//TODO
-		fingerServo->whiteDown();
+		
+		if (Shifts::isBlack(currentKey))
+			fingerServo->blackDown();
+		else
+			fingerServo->whiteDown();
+		
 		delay(pressTime);
 		fingerServo->up();
 	}
@@ -76,6 +93,7 @@ public:
 private:
 	int engineDelay;
 	int currentPos;
+	char currentKey;
 	int stepPin;
 	int dirPin;
 	ServoController * fingerServo;
