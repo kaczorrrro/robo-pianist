@@ -35,11 +35,11 @@ Written by Sebastian Kaczor
 #define KEY_A5 28
 #define KEY_AIS5 29
 #define KEY_H5 30
-#define KEY_C5 31
+#define KEY_C6 31
 
-class Shifths {
+class Shifts {
 public:
-	Shifths(int dSym, int dAsym, int whiteToBlack) {
+	Shifts(int dSym, int dAsym, int whiteToBlack) {
 		//init based on keyboard drawing
 		shifts[KEY_F3] = 0;
 		shifts[KEY_FIS3] = shifts[KEY_F3] + whiteToBlack;
