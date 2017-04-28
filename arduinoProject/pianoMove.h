@@ -53,11 +53,14 @@ public:
 	void calibrate(int buttonPin, int stepsFromLeftSide) {
 		delay(200); //Since clicking button starts calibration, we should wait some time to make sure button is no longer pressed
 		
+		//after calibration we point to first key
 		currentPos = 0;
 		currentKey = KEY_F3;
 		
 		while (digitalRead(buttonPin)) 
 			moveLeft(2);
+		
+		//after stopping we are on max left side, so now lets move a little right to point to first key
 		delay(10);
 		moveRight(stepsFromLeftSide);
 		delay(2000);
@@ -79,7 +82,6 @@ public:
 	}
 
 	void press(int pressTime) {
-		
 		if (Shifts::isBlack(currentKey))
 			fingerServo->blackDown();
 		else
