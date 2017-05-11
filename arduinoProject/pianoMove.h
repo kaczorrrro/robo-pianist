@@ -51,7 +51,7 @@ public:
 	//Code for calibration from button
 	//Button not pressed -> true
 	void calibrate(int buttonPin, int stepsFromLeftSide) {
-		delay(200); //Since clicking button starts calibration, we should wait some time to make sure button is no longer pressed
+		delay(400); //Since clicking button starts calibration, we should wait some time to make sure button is no longer pressed
 		
 		//after calibration we point to first key
 		currentPos = 0;

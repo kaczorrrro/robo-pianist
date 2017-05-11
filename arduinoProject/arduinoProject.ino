@@ -14,12 +14,12 @@ const int dAsym = 53;
 const int dWhiteToBlack = 26;//mayby 27?
 
 //value for calibration
-const int stepsFromLeftToFirstKey = 35;
+const int stepsFromLeftToFirstKey = 3;
 
 //servo params
-const int servoUpAngle = 40;
-const int servoDownOnWhite = 21;
-const int servoDownOnBlack = 23;
+const int servoUpAngle = 90;
+const int servoDownOnWhite = 50;
+const int servoDownOnBlack = 48;
 
 //engine param
 const int engineDelay = 3;
@@ -98,7 +98,7 @@ void loop() {
   //buffer for messages, probably not in the best place
   char message [100];
 
-  for (int i=0, n=sizeof(notes);i<n;i++){
+  for (int i=30, n=sizeof(notes);i<n;i++){
     finger.moveToKey(notes[i]);
 
     //caluclate how much time we have before we should play current note
