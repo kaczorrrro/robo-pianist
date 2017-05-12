@@ -18,15 +18,15 @@ const int stepsFromLeftToFirstKey = 3;
 
 //servo params
 const int servoUpAngle = 90;
-const int servoDownOnWhite = 50;
-const int servoDownOnBlack = 48;
+const int servoDownOnWhite = 43;
+const int servoDownOnBlack = 45;
 
 //engine param
-const int engineDelay = 3;
+const int engineDelay = 2;
 
 //timeing params
-const int minPressTime = 200;
-const int timeForShift = 500; // max time to move from one key to another for note of length 1
+const int minPressTime = 250;
+const int timeForShift = 400; // max time to move from one key to another for note of length 1
 
 
 //initialize services
@@ -59,21 +59,22 @@ void loop() {
 
   //these two arrays should be placed somewhere else..., but be careful, since this version depends on sizeof(array), that doesn't work for pointers!
   char notes [] = {
-    KEY_A3, KEY_C4, KEY_D4, KEY_D4, 
-    KEY_D4, KEY_E4, KEY_F4, KEY_F4,
-    KEY_F4, KEY_G4, KEY_E4, KEY_E4,
+    A3, C4, D4, D4, 
+    D4, E4, F4, F4,
+    F4, G4, E4, E4,
     //8
-    KEY_D4, KEY_C4, KEY_C4, KEY_D4,
-    KEY_A3, KEY_C4, KEY_D4, KEY_D4,
-    KEY_D4, KEY_E4, KEY_F4, KEY_F4,
-    KEY_E4, KEY_E4, KEY_D4, KEY_C4,
-    KEY_D4, KEY_A3, KEY_C4,
-    KEY_D4, KEY_D4, KEY_D4, KEY_F4,
-    KEY_G4, KEY_G4, KEY_G4, KEY_A4,
-    KEY_AIS4, KEY_AIS4, KEY_A4, KEY_G4,
+    D4, C4, C4, D4,
+    A3, C4, D4, D4,
+    D4, E4, F4, F4,
+    E4, E4, D4, C4,
+    D4, A3, C4,
+    D4, D4, D4, F4,
+    G4, G4, G4, A4,
+    AIS4, AIS4, A4, G4,
     //16
-    KEY_A4, KEY_D4
+    A4, D4
   };
+
 
   char len [] = {
     1,1,2,2,
@@ -91,14 +92,13 @@ void loop() {
     //16
     1,3,1,1
   };
-  
   unsigned long t0;
   t0 = millis()+1000; //play the first note when one second passes
 
   //buffer for messages, probably not in the best place
   char message [100];
 
-  for (int i=30, n=sizeof(notes);i<n;i++){
+  for (int i=0, n=sizeof(notes);i<n;i++){
     finger.moveToKey(notes[i]);
 
     //caluclate how much time we have before we should play current note
@@ -118,6 +118,14 @@ void loop() {
       pressingTime+=timeForShift*0.8*(len[i]-1);
     
     finger.press(pressingTime);
+
+    if (!digitalRead(buttonPin)) //pushing button means reset
+    {
+      while(!digitalRead(buttonPin));
+      delay(400);
+      return;
+    }
+   
   }
   
 }

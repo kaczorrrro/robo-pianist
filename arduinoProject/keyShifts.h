@@ -4,92 +4,92 @@ Written by Sebastian Kaczor
 */
 #pragma once
 
-#define KEY_F3 0
-#define KEY_FIS3 1
-#define KEY_G3 2
-#define KEY_GIS3 3
-#define KEY_A3 4
-#define KEY_AIS3 5
-#define KEY_H3 6
-#define KEY_C4 7
-#define KEY_CIS4 8
-#define KEY_D4 9
-#define KEY_DIS4 10
-#define KEY_E4 11
-#define KEY_F4 12
-#define KEY_FIS4 13
-#define KEY_G4 14
-#define KEY_GIS4 15
-#define KEY_A4 16
-#define KEY_AIS4 17
-#define KEY_H4 18
-#define KEY_C5 19
-#define KEY_CIS5 20
-#define KEY_D5 21
-#define KEY_DIS5 22
-#define KEY_E5 23
-#define KEY_F5 24
-#define KEY_FIS5 25
-#define KEY_G5 26
-#define KEY_GIS5 27
-#define KEY_A5 28
-#define KEY_AIS5 29
-#define KEY_H5 30
-#define KEY_C6 31
+#define F3 0
+#define FIS3 1
+#define G3 2
+#define GIS3 3
+#define A3 4
+#define AIS3 5
+#define H3 6
+#define C4 7
+#define CIS4 8
+#define D4 9
+#define DIS4 10
+#define E4 11
+#define F4 12
+#define FIS4 13
+#define G4 14
+#define GIS4 15
+#define A4 16
+#define AIS4 17
+#define H4 18
+#define C5 19
+#define CIS5 20
+#define D5 21
+#define DIS5 22
+#define E5 23
+#define F5 24
+#define FIS5 25
+#define G5 26
+#define GIS5 27
+#define A5 28
+#define AIS5 29
+#define H5 30
+#define C6 31
 
 class Shifts {
 public:
-	Shifts(int dSym, int dAsym, int whiteToBlack) {
-		//init based on keyboard drawing
-		shifts[KEY_F3] = 0;
-		shifts[KEY_FIS3] = shifts[KEY_F3] + whiteToBlack;
-		shifts[KEY_G3] = dAsym;
-		shifts[KEY_GIS3] = shifts[KEY_G3] + whiteToBlack;
-		shifts[KEY_A3] = dAsym + dSym;
-		shifts[KEY_AIS3] = shifts[KEY_A3] + whiteToBlack;
-		shifts[KEY_H3] = dAsym * 2 + dSym;
-		shifts[KEY_C4] = 4 * dSym;
-		shifts[KEY_CIS4] = shifts[KEY_C4] + whiteToBlack;
-		shifts[KEY_D4] = shifts[KEY_C4] + dAsym;
-		shifts[KEY_DIS4] = shifts[KEY_D4] + whiteToBlack;
-		shifts[KEY_E4] = shifts[KEY_C4] + 2 * dAsym;
+  Shifts(int dSym, int dAsym, int whiteToBlack) {
+    //init based on keyboard drawing
+    shifts[F3] = 0;
+    shifts[FIS3] = shifts[F3] + whiteToBlack;
+    shifts[G3] = dAsym;
+    shifts[GIS3] = shifts[G3] + whiteToBlack;
+    shifts[A3] = dAsym + dSym;
+    shifts[AIS3] = shifts[A3] + whiteToBlack;
+    shifts[H3] = dAsym * 2 + dSym;
+    shifts[C4] = 4 * dSym;
+    shifts[CIS4] = shifts[C4] + whiteToBlack;
+    shifts[D4] = shifts[C4] + dAsym;
+    shifts[DIS4] = shifts[D4] + whiteToBlack;
+    shifts[E4] = shifts[C4] + 2 * dAsym;
 
-		initRestOfShifts(dSym);
-	}
+    initRestOfShifts(dSym);
+  }
 
-	int getShift(char key) {
-		//TODO error checking
-		return shifts[key];
-	}
-	
-	static bool isBlack(char key){
-		key = key%12;
-		switch(key){
-			case KEY_FIS3:
-			case KEY_GIS3:
-			case KEY_AIS3:
-			case KEY_CIS4:
-			case KEY_DIS4:
-			return true;
-		}
-		return false;
-	}
+  int getShift(char key) {
+    //TODO error checking
+    return shifts[key];
+  }
+  
+  static bool isBlack(char key){
+    key = key%12;
+    switch(key){
+      case FIS3:
+      case GIS3:
+      case AIS3:
+      case CIS4:
+      case DIS4:
+      return true;
+    }
+    return false;
+  }
 
 private:
-	int shifts[32];
+  int shifts[32];
 
-	void initRestOfShifts(int dSym) {
-		//12 - total keys per octave
-		//7  - white keys per octave
-		for (int j = 1; j <= 2; j++) {
-			for (int i = 0; i<12; i++) {
-				shifts[KEY_F3 + 12 * j + i] = shifts[KEY_F3 + i] + 7 * j*dSym;
+  void initRestOfShifts(int dSym) {
+    //12 - total keys per octave
+    //7  - white keys per octave
+    for (int j = 1; j <= 2; j++) {
+      for (int i = 0; i<12; i++) {
+        shifts[F3 + 12 * j + i] = shifts[F3 + i] + 7 * j*dSym;
 
-				if (12 * j + i == KEY_C6) //last key check
-					return;
-			}
-		}
-	}
+        if (12 * j + i == C6) //last key check
+          return;
+      }
+    }
+  }
 };
 
 
