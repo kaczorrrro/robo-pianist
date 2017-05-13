@@ -96,3 +96,18 @@ char len [] = {
     4,4,4,3,1,
     4,3,1,8
   };
+
+//mam ten kod
+
+char notes [] = {
+	G4,GIS4,C4,G4,GIS4,G4,GIS4,C4,GIS4,G4,
+	AIS3,F4,G4,AIS3,F4,G4,AIS3,DIS4,CIS4,
+	G4,GIS4,C4,G4,GIS4,GIS4,G4,C4,GIS4,G4,
+	AIS3,F4,G4,AIS3,F4,G4,AIS3,DIS4,D4,
+	AIS3,C4,C4,C4,C4,C4,C4,AIS3,GIS3,GIS3,GIS3,GIS3,AIS3,AIS3,
+	GIS3,G3,F3
+};
+
+char len [] = {
+	1,1,1,2,2,1,1,1,2,2,1,1,1,1,2,2,1,3,3,1,1,1,2,2,1,1,1,2,2,1,	1,1,1,2,2,1,3,3,1,2,2,2,1,1,1,1,1,2,1,1,1,3,1,1,2
+};
